@@ -16,10 +16,13 @@
 
 #include "qmitigate/types.hpp"
 #include <cmath>
-#include <omp.h>
 #include <random>
 #include <stdexcept>
 #include <string>
+
+#ifdef QMITIGATE_USE_OPENMP
+#include <omp.h>
+#endif
 
 namespace qmitigate {
 

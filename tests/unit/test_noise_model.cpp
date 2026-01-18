@@ -30,7 +30,10 @@ TEST_F(NoiseModelTest, DepolarizingChannel_ZeroProbability) {
 }
 
 TEST_F(NoiseModelTest, DepolarizingChannel_FullProbability) {
-  // With probability 1.0, every gate application adds an error
+  // With probability 1.0, every application adds an error
+  // But for |0⟩ state, Z|0⟩ = |0⟩ (no visible change)
+  // Only X (bit flip) and Y errors are detectable by amplitude change
+  // Since X, Y, Z are equally probable (1/3 each), expect ~66% changes
   DepolarizingChannel channel(1.0);
 
   int changes = 0;
@@ -45,8 +48,10 @@ TEST_F(NoiseModelTest, DepolarizingChannel_FullProbability) {
     }
   }
 
-  // All applications should change the state
-  EXPECT_EQ(changes, 100);
+  // Expect roughly 2/3 of applications to show visible change (X or Y error)
+  // Allow some statistical variation (50-85 out of 100)
+  EXPECT_GT(changes, 50);
+  EXPECT_LT(changes, 85);
 }
 
 TEST_F(NoiseModelTest, DepolarizingChannel_ScaleFactor) {

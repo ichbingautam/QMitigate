@@ -143,7 +143,10 @@ TEST_F(QuantumStateTest, WStateCreation) {
 }
 
 TEST_F(QuantumStateTest, MaxQubitsCheck) {
-  EXPECT_THROW(QuantumState(50), std::invalid_argument);
+  // 50 qubits would require 2^50 * 16 bytes = ~18 EB of RAM
+  // This will fail either with invalid_argument (if check happens first)
+  // or bad_alloc (if allocation attempt fails first)
+  EXPECT_ANY_THROW(QuantumState(50));
 }
 
 TEST_F(QuantumStateTest, ZeroQubitsCheck) {

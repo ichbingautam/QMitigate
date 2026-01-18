@@ -49,11 +49,16 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 # =============================================================================
-# OpenMP (Critical for HPC Performance)
+# OpenMP (Optional - Critical for HPC Performance)
 # =============================================================================
-find_package(OpenMP REQUIRED)
+find_package(OpenMP)
 if(OpenMP_CXX_FOUND)
     message(STATUS "OpenMP found: ${OpenMP_CXX_VERSION}")
+    set(USE_OPENMP ON)
+else()
+    message(STATUS "OpenMP not found - building without parallelization")
+    message(STATUS "  For full performance on macOS, install: brew install libomp")
+    set(USE_OPENMP OFF)
 endif()
 
 # =============================================================================
@@ -104,10 +109,10 @@ target_include_directories(qmitigate_core
         $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(qmitigate_core
-    PUBLIC
-        OpenMP::OpenMP_CXX
-)
+if(USE_OPENMP)
+    target_link_libraries(qmitigate_core PUBLIC OpenMP::OpenMP_CXX)
+    target_compile_definitions(qmitigate_core PUBLIC QMITIGATE_USE_OPENMP)
+endif()
 
 # =============================================================================
 # Python Module: qmitigate_cpp

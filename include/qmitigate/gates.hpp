@@ -24,7 +24,6 @@
 #include "qmitigate/quantum_state.hpp"
 #include "qmitigate/types.hpp"
 #include <cmath>
-#include <omp.h>
 
 namespace qmitigate {
 namespace gates {
