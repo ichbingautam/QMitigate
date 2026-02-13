@@ -20,7 +20,6 @@
 > *I am a Quantum Research Engineer focused on error mitigation and compiler optimization for superconducting qubits. My work aims to squeeze maximum utility out of current NISQ devices.*
 
 This project demonstrates the intersection of **High-Performance Computing**, **Quantum Physics**, and **Research Engineering** by implementing a production-grade quantum simulator with state-of-the-art error mitigation.
-
 ---
 
 ## 📚 Table of Contents
